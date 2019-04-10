@@ -25,7 +25,6 @@ BBBBBBBBBBBBBBB
 <h3>FINISHED TABULATOR</h3>
 
 <script>
-    alert("ZZZZ");
 var tabledata = [
  	{id:1, name:"Oli Bob", age:"12", col:"red", dob:""},
  	{id:2, name:"Mary May", age:"1", col:"blue", dob:"14/05/1982"},
@@ -49,8 +48,8 @@ var tabledata = [
 
 //Build Tabulator
 var table = new Tabulator("#example-table", {
-    height:"311px",
-    data:tabledata, //assign data to table
+    height:"150px",
+    data:tabledata2, //assign data to table
     addRowPos:"bottom",
     columns:[
         {title:"Name", field:"name", width:200, editor:"input"},
@@ -63,29 +62,45 @@ var table = new Tabulator("#example-table", {
     ],
 });
 
+ //create Tabulator on DOM element with id "example-table"
+ var table2 = new Tabulator("#example-table2", {
+      height:205, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+      data:tabledata, //assign data to table
+      layout:"fitColumns", //fit columns to width of table (optional)
+      columns:[ //Define Table Columns
+          {title:"Name", field:"name", width:150},
+          {title:"Age", field:"age", align:"left", formatter:"progress"},
+          {title:"Favourite Color", field:"col"},
+          {title:"Date Of Birth", field:"dob", sorter:"date", align:"center"},
+      ],
+      rowClick:function(e, row){ //trigger an alert message when the row is clicked
+          alert("Row " + row.getData().id + " Clicked!!!!");
+      },
+ });
+
+ 
+
 //Add row on "Add Row" button click
 $("#add-row").click(function(){
-    alert("AAAAA");
+    alert("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     table.addRow({});
 });
 
 //Delete row on "Delete Row" button click
 $("#del-row").click(function(){
-    alert("BBBBB");
-     table.deleteRow(1);
+    table.deleteRow(1);
 });
 
 //Clear table on "Empty the table" button click
 $("#clear").click(function(){
-    alert("CCCCC");
-     table.clearData()
+    table.clearData()
 });
 
 //Reset table contents on "Reset the table" button click
 $("#reset").click(function(){
-    alert("DDDDD");
-     table.setData(tabledata);
+    table.setData(tabledata);
 });
+
 </script>
 
 
