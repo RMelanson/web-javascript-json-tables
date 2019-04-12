@@ -11,8 +11,9 @@
 <div class="table-controls-legend">Row Controls</div>
 
 <div class="table-controls">
-      <button id="add-row">Add Blank Row to bottom</button>
-      <button id="del-row">Remove Row "Oli Bob"</button>
+        <button id="file-load-trigger">Open File</button>
+        <button id="add-row">Add Blank Row to bottom</button>
+        <button id="del-row">Remove Row "Oli Bob"</button>
       <button id="clear">Empty the table</button>
       <button id="reset">Reset</button>
 </div>
@@ -85,6 +86,11 @@ $("#clear").click(function(){
 $("#reset").click(function(){
     alert("DDDDD");
      table.setData(tabledata);
+});
+
+//trigger AJAX load on "Load Data via AJAX" button click
+$("#file-load-trigger").click(function(){
+    table.setDataFromLocalFile();
 });
 </script>
 
