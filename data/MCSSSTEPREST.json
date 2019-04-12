@@ -1,0 +1,10 @@
+[ {
+  "function" : "addSIDToGroup",
+  "args" : [ {
+    "name" : "groupID",
+    "value" : "PARTICIPANT_MANAGEMENT_BASICS"
+  }, {
+    "name" : "sid",
+    "value" : "MCSSSTEPREST.execute"
+  } ]
+} ]

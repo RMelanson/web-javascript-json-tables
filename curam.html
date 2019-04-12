@@ -17,6 +17,7 @@
 <div class="table-controls-legend">Row Controls</div>
 
 <div class="table-controls">
+      <button id="file-load-trigger">Open File</button>
       <button id="add-row">Insert Row</button>
       <button id="del-row">Remove Row 1"</button>
       <button id="clear">Empty the table</button>
@@ -33,26 +34,26 @@
 
 <script>
 var tabledata = [
- 	{id:1, func:"Function 1", key:"key 1", value:"Value 1", ret:"Return Function 1"},
- 	{id:2, func:"Function 2", key:"key 2", value:"Value 2", ret:"Return Function 2"},
- 	{id:3, func:"Function 3", key:"key 3", value:"Value 3", ret:"Return Function 3"},
- 	{id:4, func:"Function 4", key:"key 4", value:"Value 4", ret:"Return Function 4"},
- 	{id:5, func:"Function 5", key:"key 5", value:"Value 5", ret:"Return Function 5"},
-    {id:6, func:"Function 6", key:"key 6", value:"Value 6", ret:"Return Function 6"},
-    {id:7, func:"Function 7", key:"key 7", value:"Value 7", ret:"Return Function 7"},
-    {id:8, func:"Function 8", key:"key 8", value:"Value 8", ret:"Return Function 8"},
-    {id:9, func:"Function 9", key:"key 9", value:"Value 9", ret:"Return Function 9"},
-    {id:10, func:"Function 10", key:"key 10", value:"Value 10", ret:"Return Function 10"},
-    {id:11, func:"Function 11", key:"key 11", value:"Value 11", ret:"Return Function 11"},
-    {id:12, func:"Function 12", key:"key 12", value:"Value 12", ret:"Return Function 12"},
-    {id:13, func:"Function 13", key:"key 13", value:"Value 13", ret:"Return Function 13"},
-    {id:14, func:"Function 14", key:"key 14", value:"Value 14", ret:"Return Function 14"},
-    {id:15, func:"Function 15", key:"key 15", value:"Value 15", ret:"Return Function 15"},
-    {id:16, func:"Function 16", key:"key 16", value:"Value 16", ret:"Return Function 16"},
-    {id:17, func:"Function 17", key:"key 17", value:"Value 17", ret:"Return Function 17"},
-    {id:18, func:"Function 18", key:"key 18", value:"Value 18", ret:"Return Function 18"},
-    {id:19, func:"Function 19", key:"key 19", value:"Value 19", ret:"Return Function 19"},
-    {id:20, func:"Function 20", key:"key 20", value:"Value 20", ret:"Return Function 20"},
+ 	{id:1, function:"Function 1", name:"Name 1", value:"Value 1", ret:"Return Function 1"},
+ 	{id:2, function:"Function 2", name:"Name 2", value:"Value 2", ret:"Return Function 2"},
+ 	{id:3, function:"Function 3", name:"Name 3", value:"Value 3", ret:"Return Function 3"},
+ 	{id:4, function:"Function 4", name:"Name 4", value:"Value 4", ret:"Return Function 4"},
+ 	{id:5, function:"Function 5", name:"Name 5", value:"Value 5", ret:"Return Function 5"},
+    {id:6, function:"Function 6", name:"Name 6", value:"Value 6", ret:"Return Function 6"},
+    {id:7, function:"Function 7", name:"Name 7", value:"Value 7", ret:"Return Function 7"},
+    {id:8, function:"Function 8", name:"Name 8", value:"Value 8", ret:"Return Function 8"},
+    {id:9, function:"Function 9", name:"Name 9", value:"Value 9", ret:"Return Function 9"},
+    {id:10, function:"Function 10", name:"Name 10", value:"Value 10", ret:"Return Function 10"},
+    {id:11, function:"Function 11", name:"Name 11", value:"Value 11", ret:"Return Function 11"},
+    {id:12, function:"Function 12", name:"Name 12", value:"Value 12", ret:"Return Function 12"},
+    {id:13, function:"Function 13", name:"Name 13", value:"Value 13", ret:"Return Function 13"},
+    {id:14, function:"Function 14", name:"Name 14", value:"Value 14", ret:"Return Function 14"},
+    {id:15, function:"Function 15", name:"Name 15", value:"Value 15", ret:"Return Function 15"},
+    {id:16, function:"Function 16", name:"Name 16", value:"Value 16", ret:"Return Function 16"},
+    {id:17, function:"Function 17", name:"Name 17", value:"Value 17", ret:"Return Function 17"},
+    {id:18, function:"Function 18", name:"Name 18", value:"Value 18", ret:"Return Function 18"},
+    {id:19, function:"Function 19", name:"Name 19", value:"Value 19", ret:"Return Function 19"},
+    {id:20, function:"Function 20", name:"Name 20", value:"Value 20", ret:"Return Function 20"},
  ];
 
 //Build Tabulator
@@ -71,11 +72,16 @@ var table = new Tabulator("#example-table", {
 		{column:"function", dir:"asc"},
 	],
     columns:[
-        {title:"Function", field:"func", width:200, editor:"input"},
-        {title:"Key", field:"key", width:100, align:"right", sorter:"number", editor:"input"},
+        {title:"Function", field:"function", width:200, editor:"input"},
+        {title:"Name", field:"name", width:100, align:"right", sorter:"number", editor:"input"},
         {title:"Value", field:"value", width:100, align:"right", sorter:"number", editor:"input"},
         {title:"Return", field:"ret", editor:"input"},
     ],
+});
+
+//trigger AJAX load on "Load Data via AJAX" button click
+$("#file-load-trigger").click(function(){
+    table.setDataFromLocalFile();
 });
 
 //Add row on "Add Row" button click

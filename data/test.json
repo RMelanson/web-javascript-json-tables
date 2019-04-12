@@ -1,0 +1,401 @@
+[{
+		"function": "getConfigProperty",
+		"args": [{
+				"name": "name",
+				"value": "curam.mcss.production"
+			}
+		],
+		"return": "curam.mcss.production"
+	}, {
+		"function": "setStateVariable",
+		"args": [{
+				"name": "value",
+				"value": 20180114
+			}
+		],
+		"return": "applicationDate"
+	}, {
+		"function": "setStateVariable",
+		"args": [{
+				"name": "value",
+				"value": "ODS"
+			}
+		],
+		"return": "productType"
+	}, {
+		"function": "setStateVariable",
+		"args": [{
+				"name": "value",
+				"value": "CS1"
+			}
+		],
+		"return": "caseStatusActive"
+	}, {
+		"function": "setStateVariable",
+		"args": [{
+				"name": "value",
+				"value": "CS6"
+			}
+		],
+		"return": "caseStatusApproved"
+	}, {
+		"function": "setStateVariable",
+		"args": [{
+				"name": "value",
+				"value": "AS19003"
+			}
+		],
+		"return": "applicationStatusSubmitted"
+	}, {
+		"function": "setStateVariable",
+		"args": [{
+				"name": "value",
+				"value": "LN1"
+			}
+		],
+		"return": "languageEnglish"
+	}, {
+		"function": "setStateVariable",
+		"args": [{
+				"name": "value",
+				"value": "RT6"
+			}
+		],
+		"return": "relationshipTypeSpouse"
+	}, {
+		"function": "getDefaultAddress",
+		"args": [{}
+		],
+		"return": "defaultAddress"
+	}, {
+		"function": "setStateVariable",
+		"args": [{
+				"name": "value",
+				"value": "LA13001"
+			}
+		],
+		"return": "arrangementTypeRent"
+	}, {
+		"function": "setStateVariable",
+		"args": [{
+				"name": "value",
+				"value": "DT13001"
+			}
+		],
+		"return": "disabilityTypeAdjudicated"
+	}, {
+		"function": "getRandomFirstName",
+		"args": [{
+				"name": "gender",
+				"value": "m"
+			}
+		],
+		"return": "maleName"
+	}, {
+		"function": "getRandomFirstName",
+		"args": [{
+				"name": "gender",
+				"value": "f"
+			}
+		],
+		"return": "femaleName"
+	}, {
+		"function": "createPerson",
+		"args": [{
+				"name": "firstName",
+				"value": "${maleName}"
+			}, {
+				"name": "lastName",
+				"value": "Baker"
+			}, {
+				"name": "gender",
+				"value": "m"
+			}, {
+				"name": "birthDate",
+				"value": 19800101
+			}, {
+				"name": "preferredLanguage",
+				"value": "${languageEnglish}"
+			}, {
+				"name": "address",
+				"value": "${defaultAddress}"
+			}
+		],
+		"return": "primaryConcernRoleID"
+	}, {
+		"function": "createPerson",
+		"args": [{
+				"name": "firstName",
+				"value": "${femaleName}"
+			}, {
+				"name": "lastName",
+				"value": "Baker"
+			}, {
+				"name": "gender",
+				"value": "f"
+			}, {
+				"name": "birthDate",
+				"value": 19810101
+			}, {
+				"name": "preferredLanguage",
+				"value": "${languageEnglish}"
+			}, {
+				"name": "address",
+				"value": "${defaultAddress}"
+			}
+		],
+		"return": "spouseConcernRoleID"
+	}, {
+		"function": "createApplication",
+		"args": [{
+				"name": "primaryConcernRoleID",
+				"value": "${primaryConcernRoleID}"
+			}, {
+				"name": "productType",
+				"value": "${productType}"
+			}, {
+				"name": "applicationDate",
+				"value": "${applicationDate}"
+			}
+		],
+		"return": "executionID"
+	}, {
+		"function": "submitApplication",
+		"args": [{
+				"name": "executionID",
+				"value": "${executionID}"
+			}
+		],
+		"return": "applicationID"
+	}, {
+		"function": "waitForApplicationStatus",
+		"args": [{
+				"name": "applicationID",
+				"value": "${applicationID}"
+			}, {
+				"name": "status",
+				"value": "${applicationStatusSubmitted}"
+			}
+		]
+	}, {
+		"function": "modifyApplicationDate",
+		"args": [{
+				"name": "applicationID",
+				"value": "${applicationID}"
+			}, {
+				"name": "applicationDate",
+				"value": "${applicationDate}"
+			}
+		],
+		"return": "executionID"
+	}, {
+		"function": "addClientToApplication",
+		"args": [{
+				"name": "applicationID",
+				"value": "${applicationID}"
+			}, {
+				"name": "concernRoleID",
+				"value": "${spouseConcernRoleID}"
+			}, {
+				"name": "dateAdded",
+				"value": "${applicationDate}"
+			}
+		]
+	}, {
+		"function": "getICForApplication",
+		"args": [{
+				"name": "applicationID",
+				"value": "${applicationID}"
+			}
+		],
+		"return": "icCaseID"
+	}, {
+		"function": "getCaseReference",
+		"args": [{
+				"name": "caseID",
+				"value": "${icCaseID}"
+			}
+		],
+		"return": "icCaseReference"
+	}, {
+		"function": "modifyAllInEditHouseholdMemberEvidenceStartDate",
+		"args": [{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			}, {
+				"name": "startDate",
+				"value": "${applicationDate}"
+			}
+		]
+	}, {
+		"function": "createHeadOfHouseholdEvidence",
+		"args": [{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			}, {
+				"name": "concernRoleID",
+				"value": "${primaryConcernRoleID}"
+			}, {
+				"name": "productType",
+				"value": "${productType}"
+			}
+		]
+	}, {
+		"function": "createHouseholdMemberEvidence",
+		"args": [{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			}, {
+				"name": "concernRoleID",
+				"value": "${spouseConcernRoleID}"
+			}, {
+				"name": "startDate",
+				"value": "${applicationDate}"
+			}
+		]
+	}, {
+		"function": "createHouseholdRelationshipEvidence",
+		"args": [{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			}, {
+				"name": "concernRoleAID",
+				"value": "${primaryConcernRoleID}"
+			}, {
+				"name": "concernRoleBID",
+				"value": "${spouseConcernRoleID}"
+			}, {
+				"name": "aIsTheWhatOfB",
+				"value": "${relationshipTypeSpouse}"
+			}, {
+				"name": "startDate",
+				"value": "${applicationDate}"
+			}
+		]
+	}, {
+		"function": "createLivingArrangementsEvidence",
+		"args": [{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			}, {
+				"name": "concernRoleID",
+				"value": "${primaryConcernRoleID}"
+			}, {
+				"name": "startDate",
+				"value": "${applicationDate}"
+			}, {
+				"name": "arrangementType",
+				"value": "${arrangementTypeRent}"
+			}
+		]
+	}, {
+		"function": "createDisabilityEvidence",
+		"args": [{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			}, {
+				"name": "concernRoleID",
+				"value": "${primaryConcernRoleID}"
+			}, {
+				"name": "startDate",
+				"value": "${applicationDate}"
+			}, {
+				"name": "disabilityType",
+				"value": "${disabilityTypeAdjudicated}"
+			}
+		],
+		"return": "disabilityEvidenceID"
+	}, {
+		"function": "applyAllEvidence",
+		"args": [{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			}
+		]
+	}, {
+		"function": "checkApplicationEligibility",
+		"args": [{
+				"name": "applicationID",
+				"value": "${applicationID}"
+			}
+		]
+	}, {
+		"function": "authorizeApplication",
+		"args": [{
+				"name": "applicationID",
+				"value": "${applicationID}"
+			}
+		]
+	}, {
+		"function": "findPDCaseInIC",
+		"args": [{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			}, {
+				"name": "productType",
+				"value": "${productType}"
+			}
+		],
+		"return": "pdCaseID"
+	}, {
+		"function": "getVerificationForEvidence",
+		"args": [{
+				"name": "evidenceID",
+				"value": "${disabilityEvidenceID}"
+			}, {
+				"name": "pdCaseID",
+				"value": "${pdCaseID}"
+			}
+		],
+		"return": "disabilityVerificationID"
+	}, {
+		"function": "verifyOneEvidence",
+		"args": [{
+				"name": "verificationID",
+				"value": "${disabilityVerificationID}"
+			}
+		]
+	}, {
+		"function": "submitCaseForApproval",
+		"args": [{
+				"name": "caseID",
+				"value": "${pdCaseID}"
+			}
+		]
+	}, {
+		"function": "waitForCaseStatus",
+		"args": [{
+				"name": "caseID",
+				"value": "${pdCaseID}"
+			}, {
+				"name": "status",
+				"value": "${caseStatusApproved}"
+			}
+		]
+	}, {
+		"function": "activateCaseOnline",
+		"args": [{
+				"name": "caseID",
+				"value": "${pdCaseID}"
+			}
+		]
+	}, {
+		"function": "waitForCaseStatus",
+		"args": [{
+				"name": "caseID",
+				"value": "${pdCaseID}"
+			}, {
+				"name": "status",
+				"value": "${caseStatusActive}"
+			}
+		]
+	}, {
+		"function": "getCaseReference",
+		"args": [{
+				"name": "caseID",
+				"value": "${pdCaseID}"
+			}
+		],
+		"return": "pdCaseReference"
+	}
+]
