@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html>
+    <head>
+         <link href="tabulator-master/dist/css/tabulator.min.css" rel="stylesheet">
+         <script type="text/javascript" src="tabulator-master/dist/js/tabulator.js"></script>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+         <!-- XLXS FORMAT -->
+         <script type="text/javascript" src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+         <!-- PDF FORMAT -->
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.0.5/jspdf.plugin.autotable.js"></script>
+    </head>
+<body>
+
+<h2>CURAM STEP TEST TOOL</h2>
+
+<div class="table-controls-legend">File Controls</div>
+<div class="file-controls">
+        <button id="file-load-trigger">Open File</button>
+        <button id="save-load-trigger">Save File</button>
+    </div>
+
+<div class="table-controls-legend">Row Controls</div>
+<div class="table-controls">
+      <button id="add-row">Insert Row</button>
+      <button id="del-row">Remove Row 1"</button>
+      <button id="clear">Empty the table</button>
+      <button id="reset">Reset</button>
+</div>
+
+<div id="example-table"></div>
+
+<div class="output-controls">
+        <button id="reset">Reset</button>
+        <button id="download-csv">Download CSV</button>
+        <button id="download-json">Download JSON</button>
+        <button id="download-xlsx">Download XLSX</button>
+        <button id="download-pdf">Download PDF</button>
+  </div>
+  
+<script>
+var nestedData = [
+	{
+		"function": "getConfigProperty",
+		"args": [
+			{
+				"name": "name",
+				"value": "curam.mcss.production"
+			}
+		],
+		"ret": "curam.mcss.production"
+	},
+	{
+		"function": "setStateVariable",
+		"args": [
+			{
+				"name": "value",
+				"value": "20180114"
+			}
+		],
+		"ret": "applicationDate"
+	},
+	{
+		"function": "setStateVariable",
+		"args": [
+			{
+				"name": "value",
+				"value": "ODS"
+			}
+		],
+		"ret": "productType"
+	},
+	{
+		"function": "setStateVariable",
+		"args": [
+			{
+				"name": "value",
+				"value": "CS1"
+			}
+		],
+		"ret": "caseStatusActive"
+	},
+	{
+		"function": "setStateVariable",
+		"args": [
+			{
+				"name": "value",
+				"value": "CS6"
+			}
+		],
+		"ret": "caseStatusApproved"
+	},
+	{
+		"function": "setStateVariable",
+		"args": [
+			{
+				"name": "value",
+				"value": "AS19003"
+			}
+		],
+		"ret": "applicationStatusSubmitted"
+	},
+	{
+		"function": "setStateVariable",
+		"args": [
+			{
+				"name": "value",
+				"value": "LN1"
+			}
+		],
+		"ret": "languageEnglish"
+	},
+	{
+		"function": "setStateVariable",
+		"args": [
+			{
+				"name": "value",
+				"value": "RT6"
+			}
+		],
+		"ret": "relationshipTypeSpouse"
+	},
+	{
+		"function": "getDefaultAddress",
+		"args": [
+			{}
+		],
+		"ret": "defaultAddress"
+	},
+	{
+		"function": "setStateVariable",
+		"args": [
+			{
+				"name": "value",
+				"value": "LA13001"
+			}
+		],
+		"ret": "arrangementTypeRent"
+	},
+	{
+		"function": "setStateVariable",
+		"args": [
+			{
+				"name": "value",
+				"value": "DT13001"
+			}
+		],
+		"ret": "disabilityTypeAdjudicated"
+	},
+	{
+		"function": "getRandomFirstName",
+		"args": [
+			{
+				"name": "gender",
+				"value": "m"
+			}
+		],
+		"ret": "maleName"
+	},
+	{
+		"function": "getRandomFirstName",
+		"args": [
+			{
+				"name": "gender",
+				"value": "f"
+			}
+		],
+		"ret": "femaleName"
+	},
+	{
+		"function": "createPerson",
+		"args": [
+			{
+				"name": "firstName",
+				"value": "${maleName}"
+			},
+			{
+				"name": "lastName",
+				"value": "Baker"
+			},
+			{
+				"name": "gender",
+				"value": "m"
+			},
+			{
+				"name": "birthDate",
+				"value": "19800101"
+			},
+			{
+				"name": "preferredLanguage",
+				"value": "${languageEnglish}"
+			},
+			{
+				"name": "address",
+				"value": "${defaultAddress}"
+			}
+		],
+		"ret": "primaryConcernRoleID"
+	},
+	{
+		"function": "createPerson",
+		"args": [
+			{
+				"name": "firstName",
+				"value": "${femaleName}"
+			},
+			{
+				"name": "lastName",
+				"value": "Baker"
+			},
+			{
+				"name": "gender",
+				"value": "f"
+			},
+			{
+				"name": "birthDate",
+				"value": "19810101"
+			},
+			{
+				"name": "preferredLanguage",
+				"value": "${languageEnglish}"
+			},
+			{
+				"name": "address",
+				"value": "${defaultAddress}"
+			}
+		],
+		"ret": "spouseConcernRoleID"
+	},
+	{
+		"function": "createApplication",
+		"args": [
+			{
+				"name": "primaryConcernRoleID",
+				"value": "${primaryConcernRoleID}"
+			},
+			{
+				"name": "productType",
+				"value": "${productType}"
+			},
+			{
+				"name": "applicationDate",
+				"value": "${applicationDate}"
+			}
+		],
+		"ret": "executionID"
+	},
+	{
+		"function": "submitApplication",
+		"args": [
+			{
+				"name": "executionID",
+				"value": "${executionID}"
+			}
+		],
+		"ret": "applicationID"
+	},
+	{
+		"function": "waitForApplicationStatus",
+		"args": [
+			{
+				"name": "applicationID",
+				"value": "${applicationID}"
+			},
+			{
+				"name": "status",
+				"value": "${applicationStatusSubmitted}"
+			}
+		]
+	},
+	{
+		"function": "modifyApplicationDate",
+		"args": [
+			{
+				"name": "applicationID",
+				"value": "${applicationID}"
+			},
+			{
+				"name": "applicationDate",
+				"value": "${applicationDate}"
+			}
+		],
+		"ret": "executionID"
+	},
+	{
+		"function": "addClientToApplication",
+		"args": [
+			{
+				"name": "applicationID",
+				"value": "${applicationID}"
+			},
+			{
+				"name": "concernRoleID",
+				"value": "${spouseConcernRoleID}"
+			},
+			{
+				"name": "dateAdded",
+				"value": "${applicationDate}"
+			}
+		]
+	},
+	{
+		"function": "getICForApplication",
+		"args": [
+			{
+				"name": "applicationID",
+				"value": "${applicationID}"
+			}
+		],
+		"ret": "icCaseID"
+	},
+	{
+		"function": "getCaseReference",
+		"args": [
+			{
+				"name": "caseID",
+				"value": "${icCaseID}"
+			}
+		],
+		"ret": "icCaseReference"
+	},
+	{
+		"function": "modifyAllInEditHouseholdMemberEvidenceStartDate",
+		"args": [
+			{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			},
+			{
+				"name": "startDate",
+				"value": "${applicationDate}"
+			}
+		]
+	},
+	{
+		"function": "createHeadOfHouseholdEvidence",
+		"args": [
+			{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			},
+			{
+				"name": "concernRoleID",
+				"value": "${primaryConcernRoleID}"
+			},
+			{
+				"name": "productType",
+				"value": "${productType}"
+			}
+		]
+	},
+	{
+		"function": "createHouseholdMemberEvidence",
+		"args": [
+			{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			},
+			{
+				"name": "concernRoleID",
+				"value": "${spouseConcernRoleID}"
+			},
+			{
+				"name": "startDate",
+				"value": "${applicationDate}"
+			}
+		]
+	},
+	{
+		"function": "createHouseholdRelationshipEvidence",
+		"args": [
+			{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			},
+			{
+				"name": "concernRoleAID",
+				"value": "${primaryConcernRoleID}"
+			},
+			{
+				"name": "concernRoleBID",
+				"value": "${spouseConcernRoleID}"
+			},
+			{
+				"name": "aIsTheWhatOfB",
+				"value": "${relationshipTypeSpouse}"
+			},
+			{
+				"name": "startDate",
+				"value": "${applicationDate}"
+			}
+		]
+	},
+	{
+		"function": "createLivingArrangementsEvidence",
+		"args": [
+			{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			},
+			{
+				"name": "concernRoleID",
+				"value": "${primaryConcernRoleID}"
+			},
+			{
+				"name": "startDate",
+				"value": "${applicationDate}"
+			},
+			{
+				"name": "arrangementType",
+				"value": "${arrangementTypeRent}"
+			}
+		]
+	},
+	{
+		"function": "createDisabilityEvidence",
+		"args": [
+			{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			},
+			{
+				"name": "concernRoleID",
+				"value": "${primaryConcernRoleID}"
+			},
+			{
+				"name": "startDate",
+				"value": "${applicationDate}"
+			},
+			{
+				"name": "disabilityType",
+				"value": "${disabilityTypeAdjudicated}"
+			}
+		],
+		"ret": "disabilityEvidenceID"
+	},
+	{
+		"function": "applyAllEvidence",
+		"args": [
+			{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			}
+		]
+	},
+	{
+		"function": "checkApplicationEligibility",
+		"args": [
+			{
+				"name": "applicationID",
+				"value": "${applicationID}"
+			}
+		]
+	},
+	{
+		"function": "authorizeApplication",
+		"args": [
+			{
+				"name": "applicationID",
+				"value": "${applicationID}"
+			}
+		]
+	},
+	{
+		"function": "findPDCaseInIC",
+		"args": [
+			{
+				"name": "icCaseID",
+				"value": "${icCaseID}"
+			},
+			{
+				"name": "productType",
+				"value": "${productType}"
+			}
+		],
+		"ret": "pdCaseID"
+	},
+	{
+		"function": "getVerificationForEvidence",
+		"args": [
+			{
+				"name": "evidenceID",
+				"value": "${disabilityEvidenceID}"
+			},
+			{
+				"name": "pdCaseID",
+				"value": "${pdCaseID}"
+			}
+		],
+		"ret": "disabilityVerificationID"
+	},
+	{
+		"function": "verifyOneEvidence",
+		"args": [
+			{
+				"name": "verificationID",
+				"value": "${disabilityVerificationID}"
+			}
+		]
+	},
+	{
+		"function": "submitCaseForApproval",
+		"args": [
+			{
+				"name": "caseID",
+				"value": "${pdCaseID}"
+			}
+		]
+	},
+	{
+		"function": "waitForCaseStatus",
+		"args": [
+			{
+				"name": "caseID",
+				"value": "${pdCaseID}"
+			},
+			{
+				"name": "status",
+				"value": "${caseStatusApproved}"
+			}
+		]
+	},
+	{
+		"function": "activateCaseOnline",
+		"args": [
+			{
+				"name": "caseID",
+				"value": "${pdCaseID}"
+			}
+		]
+	},
+	{
+		"function": "waitForCaseStatus",
+		"args": [
+			{
+				"name": "caseID",
+				"value": "${pdCaseID}"
+			},
+			{
+				"name": "status",
+				"value": "${caseStatusActive}"
+			}
+		]
+	},
+	{
+		"function": "getCaseReference",
+		"args": [
+			{
+				"name": "caseID",
+				"value": "${pdCaseID}"
+			}
+		],
+		"ret": "pdCaseReference"
+	}
+]
+
+//Build Tabulator
+var table = new Tabulator("#example-table", {
+    height:"311px",
+    layout:"fitColumns",
+    resizableColumns:false,
+    data:nestedData,
+    columns:[
+        {title:"Function", field:"function"},
+        {title:"Return", field:"ret"},
+    ],
+    rowFormatter:function(row){
+        //create and style holder elements
+       var holderEl = document.createElement("div");
+       var tableEl = document.createElement("div");
+
+       holderEl.style.boxSizing = "border-box";
+       holderEl.style.padding = "10px 30px 10px 10px";
+       holderEl.style.borderTop = "1px solid #333";
+       holderEl.style.borderBotom = "1px solid #333";
+       holderEl.style.background = "#ddd";
+
+       tableEl.style.border = "1px solid #333";
+
+       holderEl.appendChild(tableEl);
+
+       row.getElement().appendChild(holderEl);
+
+       var subTable = new Tabulator(tableEl, {
+           layout:"fitColumns",
+           data:row.getData().args,
+           columns:[
+           {title:"Name", field:"name"},
+           {title:"Value", field:"value"},
+           ]
+       })
+    },
+});
+
+//trigger AJAX load on "Load Data via AJAX" button click
+$("#file-load-trigger").click(function(){
+    table.setDataFromLocalFile();
+});
+//trigger AJAX load on "Load Data via AJAX" button click
+$("#file-load-trigger").click(function(){
+    table.setDataFromLocalFile();
+});
+
+//Add row on "Add Row" button click
+$("#add-row").click(function(){
+    table.addRow({});
+});
+
+//Delete row on "Delete Row" button click
+$("#del-row").click(function(){
+    table.deleteRow(1);
+});
+
+//Clear table on "Empty the table" button click
+$("#clear").click(function(){
+    table.clearData()
+});
+
+//Reset table contents on "Reset the table" button click
+$("#reset").click(function(){
+    table.setData(tabledata);
+});
+
+//trigger download of data.csv file
+$("#download-csv").click(function(){
+    table.download("csv", "data.csv");
+});
+
+//trigger download of data.json file
+$("#download-json").click(function(){
+    table.download("json", "data.json");
+});
+
+//trigger download of data.xlsx file
+$("#download-xlsx").click(function(){
+    table.download("xlsx", "data.xlsx", {sheetName:"My Data"});
+});
+
+//trigger download of data.pdf file
+$("#download-pdf").click(function(){
+    table.download("pdf", "data.pdf", {
+        orientation:"portrait", //set page orientation to portrait
+        title:"Example Report", //add title to report
+    });
+});
+</script>
+
+
+<button type="button"
+onclick="document.getElementById('demo').innerHTML = 'Test Success'">
+Execute Test</button>
+<!-- onclick="document.getElementById('demo').innerHTML = Date()" -->
+<p id="demo"></p>
+
+</body>
+</html> 
